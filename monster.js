@@ -1,22 +1,22 @@
 
 // Create a new Monster and initialize it.
 var Monster = function(sides, row, column) {
-    this.sides = sides;
+    this.sides = sides; // shape
     this.location = {
         'row': row,
         'column': column,
     };
-    this.direction = {
+    this.direction = { // might be useful for vector change
         'row': 0,
         'column': 0,
     };
-    this.angle = Math.map(Math.random(), 0, 1, 0, 360);
-    this.rotation = Math.map(Math.random(), 0, 1, -2, 2);
-    this.moveDelay = Math.map(Math.random(), 0, 1, monsterMoveDelayMin, monsterMoveDelayMax);
-    this.moveTime = 0;
+    this.angle = Math.map(Math.random(), 0, 1, 0, 360); // angle that they rotate
+    this.rotation = Math.map(Math.random(), 0, 1, -2, 2); // rotation
+    this.moveDelay = Math.map(Math.random(), 0, 1, monsterMoveDelayMin, monsterMoveDelayMax); // how long until they move again, within a range?
+    this.moveTime = 0; // how long it takes them to move
 }
 
-// Draw me to the canvas.
+// Draw monster to the canvas.
 Monster.prototype.draw = function() {
     var x = wallStartX + this.location.column * wallSize + wallSize/2;
     var y = wallStartY + this.location.row * wallSize + wallSize/2;
@@ -33,6 +33,7 @@ Monster.prototype.update = function(player) {
 }
 
 // Figure out which direction I should move in, and change my location appropriately.
+// make different monsters
 Monster.prototype.move = function(player) {
     // If I can see the player, I should chase them. Otherwise, just walk around.
     var chasingPlayer = this.chasePlayer(player);
@@ -146,4 +147,3 @@ Monster.prototype.walkWherever = function() {
         }
     }
 }
-

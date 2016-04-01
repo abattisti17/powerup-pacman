@@ -56,4 +56,3 @@ Player.prototype.resurrect = function() {
     this.alive = true;
     this.color = playerColor;
 }
-

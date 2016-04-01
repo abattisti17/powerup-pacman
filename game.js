@@ -2,7 +2,7 @@
 // This program draws a maze that the player can navigate with the arrow keys.
 // The maze is full of dots that the player can eat points.
 // The player is also being chased by monsters!
-// 
+//
 
 //
 // The maze is represented by a string that is formatted into a grid.
@@ -32,41 +32,41 @@ var rows = 11;
 var pathColor = 0x95CFB7;
 var wallColor = 0xFF823A;
 var dotColor = 0xF2F26F;
-var monsterColor = 0xF04155;
+var monsterColor = 0xF04155; // must be for different monsters
 var playerColor = 0xFFF7BD;
 var deadColor = 0x000000;
 
-// shorter delays mean faster monsters.
+// shorter delays mean faster monsters. a global variable, we need to make these for each monster
 var monsterMoveDelayMin = 500;
 var monsterMoveDelayMax = 1000;
 
 // ============================================================================
 
-var startLocation;
-var wallStartX, wallStartY, wallSize;
-var dotSize;
-var dots = [];
-var player;
-var monsters = [];
-var maxScore;
+var startLocation; // where the player starts, sub data for rows and columns
+var wallStartX, wallStartY, wallSize; // where we start drawing the wall, based on renderer sizes
+var dotSize; // how big dots are
+var dots = []; // draw some dots
+var player; // player
+var monsters = []; // number in the brackets is how many monsters we draw (i), but change it in the monster.js
+var maxScore; // the maximum dots you can eat
 
-function setup() {
+function setup() { // renders the maze
     renderer.backgroundColor = wallColor;
     buildMaze();
     player = new Player(startLocation.row, startLocation.column);
 }
 
-function update() {
-    graphics.clear();
+function update() { // draw the state of the game
+    graphics.clear(); // wipes the graphics
     drawPath();
     drawDots();
     drawPlayer();
     drawMonsters();
-    checkCollisions();
+    checkCollisions(); // has the player eaten a dot, have they died?
     updateMonster();
 }
 
-function onKeyDown(event) {
+function onKeyDown(event) { // moving
     deltaRow = 0;
     deltaColumn = 0;
     switch (event.keyCode) {
@@ -82,9 +82,9 @@ function onKeyDown(event) {
         case 40: // Down Arrow
             deltaRow = +1;
             break;
-        case 76: // L for 'Live Again'
+        case 76: // L for 'Live Again' -- cheat codes!!!
             if (!player.alive)
-                player.resurrect();
+                player.resurrect(); // Jesus function
             break;
     }
 
@@ -95,21 +95,22 @@ function onKeyDown(event) {
 function buildMaze() {
     // Calculate the best-fit size of a wall block based on the canvas size
     // and number of columns or rows in the grid.
-    wallSize = Math.min(renderer.width/(columns+2), renderer.height/(rows+2));
+    wallSize = Math.min(renderer.width/(columns+2), renderer.height/(rows+2)); // padding is relative to the number of columns and rows
 
     // Calculate the starting position when drawing the maze.
     wallStartX = (renderer.width - (wallSize*columns)) / 2;
     wallStartY = (renderer.height - (wallSize*rows)) / 2;
 
     // The size of a dot is some fraction of the size of a maze spot.
-    dotSize = wallSize / 8;
+    dotSize = wallSize / 8; // useful for powerups?
 
     maxScore = 0;
-    var monsterSides = 3;
+    var monsterSides = 3; // first monster has 3 sides, +1 for every one after
 
     // Find the player and monster locations, and initialize the dot map.
-    for (var r=0; r<rows; r++) {
-        for (var c=0; c<columns; c++) {
+    // r and c are player location coordinates and columns and rows are defintions of the maze
+    for (var r=0; r<rows; r++) { // ?
+        for (var c=0; c<columns; c++) { // ?
             var i = (r * columns) + c;
             var ch = maze[i];
             if (ch == 'A') {
@@ -121,8 +122,8 @@ function buildMaze() {
 
             if (!isWall(r, c) && ch != 'Z' && ch != 'A') {
                 // each clear space in the maze should have a dot in it.
-                dots[i] = '.';
-                maxScore += 1;
+                dots[i] = '.'; // ?
+                maxScore += 1; // defines how many points you need to win, parametrically
             } else {
                 dots[i] = ' ';
             }
@@ -130,7 +131,7 @@ function buildMaze() {
     }
 }
 
-function isWall(r, c) {
+function isWall(r, c) { // checks if there's a wall where you're trying to move
     var i = (r * columns) + c;
     var ch = maze[i];
     return ((ch != ' ') && (ch != 'A') && (ch != 'Z'));
@@ -203,6 +204,7 @@ function checkCollisions() {
         scorediv.innerHTML = player.score;
 
         // Did we win yet?
+        //Win State!!
         if (player.score == maxScore) {
             player.win();
             scorediv.innerHTML = player.score + " - YOU WIN!";
@@ -226,4 +228,3 @@ function updateMonster() {
         monster.update(player);
     }
 }
-

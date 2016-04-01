@@ -6,7 +6,7 @@ var gameTime, dt;
 var mousePosition;
 
 function fwSetup() {
-    renderer = PIXI.autoDetectRenderer(640, 480);
+    renderer = PIXI.autoDetectRenderer(640, 480); // make this full window size
     renderer.backgroundColor = 0xFFFFFF;
     renderer.view.id = 'fwcanvas';
 
@@ -171,4 +171,3 @@ Math.radToDeg = function(r) {
 Math.degToRad = function(d) {
     return (Math.TAU / 360.0) * d;
 }
-
