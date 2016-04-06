@@ -38,7 +38,8 @@ Monster.prototype.move = function(player) {
     // If I can see the player, I should chase them. Otherwise, just walk around.
     var chasingPlayer = this.chasePlayer(player);
     if (!chasingPlayer) {
-        this.walkWherever();
+        // this.walkWherever();
+        this.walkOnEdges();
     }
 
     // That was all just to decide what direction I should move in. Now I actually move!
@@ -145,5 +146,40 @@ Monster.prototype.walkWherever = function() {
             this.direction.row = openDirections[j].row;
             this.direction.column = openDirections[j].column;
         }
+    }
+}
+
+// Move around the edges.
+Monster.prototype.walkOnEdges = function() {
+    // Look in all four directions and see which ones are clear for me to walk to.
+    // var openDirections2 = [];
+    if ((canMoveTo(this.location.row-1, this.location.column)) && (canMoveTo(this.location.row, this.location.column-1))) { // looks up & left
+      console.log('move me right! ' + 'direction row= ' + this.direction.row + 'direction row= ' + this.direction.column);
+        // openDirections.push({'row':-1, 'column':0});
+    // }
+    // if (canMoveTo(this.location.row, this.location.column+1)) {
+    //     openDirections.push({'row':0, 'column':+1}); // right
+    // }
+    // if (canMoveTo(this.location.row+1, this.location.column)) {
+    //     openDirections.push({'row':+1, 'column':0}); // looks down
+    // }
+    // if (canMoveTo(this.location.row, this.location.column-1)) {
+    //     openDirections.push({'row':0, 'column':-1}); // left
+    // }
+
+    // Try to keep moving in whatever direction I was heading in. But if I'm
+    // hitting a wall or I'm at a fork in the maze, move in a new direction.
+    var isMoving = (this.direction.row != 0 || this.direction.column != 0);
+    var pathIsClear = canMoveTo(this.location.row+this.direction.row, this.location.column+this.direction.column);
+    var atFork = (openDirections.length > 2);
+
+    if (!isMoving || !pathIsClear || atFork) {
+        // To pick a new direction, Pick randomly from the array of possible locations.
+        if (openDirections.length > 0) {
+            var j = Math.floor(Math.random() * openDirections.length);
+            this.direction.row = openDirections[j].row;
+            this.direction.column = openDirections[j].column;
+        }
+        if
     }
 }
