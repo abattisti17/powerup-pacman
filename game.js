@@ -15,12 +15,12 @@
 //         -------------------
 var maze = '                 '
          + ' # ## ##Z## ## # '
-         + '   #   ###   #   '
-         + ' #   #     #   # '
-         + ' ## ## # # ## ## '
+         + '   #   ###  Z#   '
+         + ' # Z #     #   # '
+         + ' ## ##Z# # ## ## '
          + ' Z#     A     #Z '
          + ' ## ## # # ## ## '
-         + ' #   #     #   # '
+         + ' #   #   Z #   # '
          + '   #   ###   #   '
          + ' # ## ##Z## ## # '
          + '                 ';
@@ -49,11 +49,14 @@ var dots = []; // draw some dots
 var player; // player
 var monsters = []; // number in the brackets is how many monsters we draw (i), but change it in the monster.js
 var maxScore; // the maximum dots you can eat
+var playerLives = 3;
+shouldCheckCollisions = false;
 
 function setup() { // renders the maze
     renderer.backgroundColor = wallColor;
     buildMaze();
     player = new Player(startLocation.row, startLocation.column);
+    // player2 = new Player(startLocation.row + 1, startLocation.column);
 }
 
 function update() { // draw the state of the game
@@ -62,7 +65,10 @@ function update() { // draw the state of the game
     drawDots();
     drawPlayer();
     drawMonsters();
-    checkCollisions(); // has the player eaten a dot, have they died?
+    if (shouldCheckCollisions) {
+      shouldCheckCollisions = false;
+      checkCollisions(); // has the player eaten a dot, have they died?
+    }
     updateMonster();
 }
 
@@ -85,11 +91,21 @@ function onKeyDown(event) { // moving
         case 76: // L for 'Live Again' -- cheat codes!!!
             if (!player.alive)
                 player.resurrect(); // Jesus function
+                playerLives = 3;
             break;
     }
 
-    if (deltaRow != 0 || deltaColumn != 0)
+    if (deltaRow != 0 || deltaColumn != 0) {
         player.move(deltaRow, deltaColumn);
+        shouldCheckCollisions = true;
+        // player2.move(deltaRow, deltaColumn);
+
+        // check to see if the player is on top of any monsters.
+        for (var i in monsters) {
+            var monster = monsters[i];
+            monster.iHitThePlayer = false;
+      }
+    }
 }
 
 function buildMaze() {
@@ -181,6 +197,7 @@ function drawDots() {
 
 function drawPlayer() {
     player.draw();
+    // player2.draw();
 }
 
 function drawMonsters() {
@@ -214,8 +231,16 @@ function checkCollisions() {
     // check to see if the player is on top of any monsters.
     for (var i in monsters) {
         var monster = monsters[i];
+        if (monster.iHitThePlayer) {
+          continue;
+        }
         if (player.location.row == monster.location.row && player.location.column == monster.location.column) {
-            player.die();
+          playerLives -= 1;
+          monster.iHitThePlayer = true;
+          console.log('player lives = ' + playerLives);
+        }
+        if (playerLives == 0) {
+          player.die();
         }
     }
 }
