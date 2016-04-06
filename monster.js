@@ -179,7 +179,6 @@ Monster.prototype.walkOnEdges = function() {
             var j = Math.floor(Math.random() * openDirections.length);
             this.direction.row = openDirections[j].row;
             this.direction.column = openDirections[j].column;
-        }
-        if
+        
     }
 }
