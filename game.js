@@ -52,6 +52,10 @@ var maxScore; // the maximum dots you can eat
 var playerLives = 3;
 shouldCheckCollisions = false;
 
+//SOUNDS
+var wakaWaka = new Audio("wakaWaka.wav");
+var pacmanDies = new Audio("pacmanDies.wav");
+
 function setup() { // renders the maze
     renderer.backgroundColor = wallColor;
     buildMaze();
@@ -241,6 +245,7 @@ function checkCollisions() {
         }
         if (playerLives == 0) {
           player.die();
+          pacmanDies.play(); // plays dies sound
         }
     }
 }
