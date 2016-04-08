@@ -14,16 +14,16 @@
 //
 //         -------------------
 var maze = '                 '
-         + ' # ## ##Z## ## # '
-         + '   #   ###  Z#   '
-         + ' # Z #     #   # '
-         + ' ## ##Z# # ## ## '
-         + ' Z#     A     #Z '
-         + ' ## ## # # ## ## '
-         + ' #   #   Z #   # '
+         + 'Z# ## ##Z## ## #Z'
          + '   #   ###   #   '
-         + ' # ## ##Z## ## # '
-         + '                 ';
+         + ' #   #     #   # '
+         + ' ## ## # # ## ## '
+         + '  #     A     #  '
+         + ' ## ## # # ## ## '
+         + ' #   #     #   # '
+         + '   #   ###   #   '
+         + ' # ## ## ## ## # '
+         + 'Z       Z      Z ';
 //         -------------------
 
 var columns = 17;
@@ -53,13 +53,19 @@ var playerLives = 3;
 shouldCheckCollisions = false;
 
 //SOUNDS
-var wakaWaka = new Audio("wakaWaka.wav");
-var pacmanDies = new Audio("pacmanDies.wav");
+var wakaWaka = new Audio("wakaWaka.m4a");
+var pacmanDies = new Audio("pacmanDies.m4a");
+var startUp = new Audio("startUp.m4a");
+var pacmanDies = new Audio("pacmanDies.m4a");
+var jesus = new Audio("jesus.m4a");
+var loseLife = new Audio("loseLife.m4a");
+var playerWin = new Audio("playerWin.m4a");
 
 function setup() { // renders the maze
     renderer.backgroundColor = wallColor;
     buildMaze();
     player = new Player(startLocation.row, startLocation.column);
+    startUp.play(); // plays start up sound
     // player2 = new Player(startLocation.row + 1, startLocation.column);
 }
 
@@ -96,6 +102,7 @@ function onKeyDown(event) { // moving
             if (!player.alive)
                 player.resurrect(); // Jesus function
                 playerLives = 3;
+                jesus.play(); // plays jesus sound
             break;
     }
 
@@ -219,6 +226,7 @@ function checkCollisions() {
     if (dots[i] == '.') {
         player.score += 1;
         dots[i] = ' ';
+        wakaWaka.play(); // plays eating sound
 
         // update the score display, which is in HTML outside of our canvas.
         var scorediv = document.getElementById('score');
@@ -240,6 +248,7 @@ function checkCollisions() {
         }
         if (player.location.row == monster.location.row && player.location.column == monster.location.column) {
           playerLives -= 1;
+          loseLife.play(); // plays eating sound
           monster.iHitThePlayer = true;
           console.log('player lives = ' + playerLives);
         }
