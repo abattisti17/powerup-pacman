@@ -27,6 +27,21 @@ var maze = '                 '
          + 'Z       Z      Z ';
 //         -------------------
 
+//         -------------------
+var maze2 = '                 '
+         + 'Z# ## ##Z## ## #Z'
+         + '   #   ###   #   '
+         + ' #   #   # #   # '
+         + ' ## ## # # ## ## '
+         + '  #     A###  #  '
+         + ' ##    # # ## ## '
+         + ' #   #     #   # '
+         + '   #Z  ### Z #   '
+         + ' # ## ## ## ## # '
+         + 'Z       Z      Z ';
+//         -------------------
+
+var mazeCounter = 1;
 var columns = 17;
 var rows = 11;
 
@@ -219,6 +234,12 @@ function drawMonsters() {
     }
 }
 
+var changeMaze = function(newMaze) {
+    maze = newMaze; //changes the maze variable to hold another maze
+    mazeCounter +=1;
+    buildMaze(); //rebuilds the maze
+  }
+
 // ============================================================================
 
 function checkCollisions() {
@@ -238,6 +259,7 @@ function checkCollisions() {
         if (player.score == maxScore) {
             player.win();
             scorediv.innerHTML = player.score + " - YOU WIN!";
+            changeMaze(maze2);
         }
     }
 
