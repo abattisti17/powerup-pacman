@@ -10,6 +10,7 @@
 // - the start point ('A');
 // - a wall ('#').
 // - a monster ('Z');
+// - a power up ('P');
 // - a walkable empty space (' ').
 //
 //         -------------------
