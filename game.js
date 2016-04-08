@@ -154,6 +154,11 @@ function onKeyDown(event) { // moving
 }
 
 function buildMaze() {
+
+    if (mazeCounter == 2) {
+      // collin's startup sound.play
+    }
+
     // Calculate the best-fit size of a wall block based on the canvas size
     // and number of columns or rows in the grid.
     wallSize = Math.min(renderer.width/(columns+2), renderer.height/(rows+2)); // padding is relative to the number of columns and rows
