@@ -29,21 +29,36 @@ var maze = '                 '
 
 //         -------------------
 var maze2 = '                 '
-         + 'Z# ## ##Z## ## #Z'
-         + '   #   ###   #   '
-         + ' #   #   # #   # '
-         + ' ## ## # # ## ## '
-         + '  #     A###  #  '
-         + ' ##    # # ## ## '
-         + ' #   #     #   # '
-         + '   #Z  ### Z #   '
-         + ' # ## ## ## ## # '
-         + 'Z       Z      Z ';
+         + 'Z# ##  #Z## ## #  # ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## #  # ##   Z## ## #Z'
+         + 'Z# ##  #Z## ## # Z# ##  #Z   ## #Z'
+         + 'Z# ##  #Z## ## # Z# ##  #  # ## #Z'
+         + 'Z# ##  #Z## ## #ZZ# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## #ZZ# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## #ZZ# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## #ZZ# ##  #Z## ## #Z'
+         + 'Z# ##    #A ## #ZZ# ##  #Z## ## #Z'
+         + 'Z# ##  #  # ## # Z# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## # Z# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## # Z# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## # Z# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## # Z# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## # Z# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## # Z# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## #ZZ# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## #ZZ# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## #ZZ# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## #ZZ# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## #ZZ# ##  #Z## ## #Z'
+         + 'Z# ##  #Z## ## #ZZ# ##  #Z## ## #Z';
+
 //         -------------------
 
 var mazeCounter = 1;
 var columns = 17;
 var rows = 11;
+var columns2 = 34;
+var rows2 = 22;
 
 var pathColor = 0x95CFB7;
 var wallColor = 0xFF823A;
@@ -120,6 +135,9 @@ function onKeyDown(event) { // moving
                 playerLives = 3;
                 jesus.play(); // plays jesus sound
             break;
+        case 84: // Teleport to next level
+        changeMaze(maze2, rows2, columns2);
+        break;
     }
 
     if (deltaRow != 0 || deltaColumn != 0) {
@@ -234,8 +252,10 @@ function drawMonsters() {
     }
 }
 
-var changeMaze = function(newMaze) {
+var changeMaze = function(newMaze, newRows, newColumns) {
     maze = newMaze; //changes the maze variable to hold another maze
+    rows = newRows;
+    columns = newColumns;
     mazeCounter +=1;
     buildMaze(); //rebuilds the maze
   }
@@ -259,7 +279,8 @@ function checkCollisions() {
         if (player.score == maxScore) {
             player.win();
             scorediv.innerHTML = player.score + " - YOU WIN!";
-            changeMaze(maze2);
+            changeMaze(maze2, rows2, columns2);
+// rows and columns change
         }
     }
 
