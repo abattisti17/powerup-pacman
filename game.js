@@ -109,6 +109,8 @@ var dots = []; // draw some dots
 var player; // player
 var monsters = []; // number in the brackets is how many monsters we draw (i), but change it in the monster.js
 var maxScore; // the maximum dots you can eat
+var maxScore2 = 507;
+var maxScore3 = 700;
 var playerLives = 3;
 shouldCheckCollisions = false;
 
@@ -176,7 +178,8 @@ function onKeyDown(event) { // moving
                 // jesus.play(); // plays jesus sound
             break;
         case 84: // Teleport to next level
-        changeMaze(maze2, rows2, columns2);
+        changeMaze(maze2, rows2, columns2, maxScore2);
+        player.score = 120;
         break;
     }
 
@@ -298,11 +301,12 @@ function drawMonsters() {
     }
 }
 
-var changeMaze = function(newMaze, newRows, newColumns) {
+var changeMaze = function(newMaze, newRows, newColumns, newMaxScore) {
     maze = newMaze; //changes the maze variable to hold another maze
     rows = newRows;
     columns = newColumns;
     mazeCounter +=1;
+    maxScore = newMaxScore;
     buildMaze(); //rebuilds the maze
   }
 
@@ -328,7 +332,13 @@ function checkCollisions() {
         if (player.score == maxScore) {
             player.win();
             scorediv.innerHTML = player.score + " - YOU WIN!";
-            changeMaze(maze2, rows2, columns2);
+
+            if (mazeCounter == 1) {
+              changeMaze(maze2, rows2, columns2, maxScore2);
+            }
+              if (mazeCounter == 2) {
+                changeMaze(maze3, rows3, columns3, maxScore3);
+              }
 // rows and columns change
         }
     }
