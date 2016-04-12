@@ -29,28 +29,28 @@ var maze = '                 '
 
 //         -------------------
 var maze2 =   '                                  '
-         + ' # ##  # ## ## #  # ##  #Z## ## # '
+         + ' # ##  # ## ## #  # ##  # ## ## # '
          + ' # ##  # ## ## #  # ##    ## ## # '
          + ' # ##  # ## ## #  # ##  #    ## # '
-         + ' # ##  # ## ## # Z# ##  #  # ## # '
-         + ' # ##  # ## ## # #  ##  # ## ## # '
+         + ' # ##  # ## ## #  # ##  #  # ## # '
+         + '       # ## ## # #  ##  # ## ## # '
          + ' # ##  # ## ## #  # ##  #    ## # '
          + ' # ##  # ## ## #  # ##  # ## ## # '
          + ' # ##  # ## ## #  # ##  # ## ## # '
          + ' # ##    #A ## #  # ##  # ## ## # '
-         + ' # ##  #  # ## # ## ##  # ##  # # '
+         + ' # ##  #  # ## # ##     # ##  # # '
          + ' # ##  # ## ## # ## ##  #### ## # '
-         + ' # ##  # ##Z## # ## ##  # ## ## # '
-         + ' # ##### ## ## # ## ##  # ## ## # '
+         + ' # ##  # ## ## # ## ##  # ## ## # '
+         + ' # ##### ## ## # ## ##  #  # ## # '
          + '   ##  # ## ## #    ##  # ## ## # '
          + ' #          ## # ## ##  # ## ## # '
          + ' # ##  # ## ## #    ##  # ## ## # '
          + ' # ##  # ## ## # ## ##  # ## ## # '
-         + ' # ##  # ## ## # ##Z##  # ## ## # '
-         + ' # ##  # ## ## #### ##  # ## ## # '
-         + ' # ##  # ## ## #### ##  # ## ## # '
+         + ' # ##  # ## ## # ## ##  # ## ## # '
+         + ' # ##  # ## ## #### ##  #       # '
+         + ' # ##    ##    #### ##  # ## ## # '
          + ' #  #  # ## ## ##   ##  # ## ## # '
-         + ' # ##    ## ## #### ##  # ## ## # ';
+         + ' # ##    ##    #### ##  # ## ## # ';
 
 //         -------------------
 
@@ -92,11 +92,18 @@ var jesus = new Audio("jesus.m4a");
 var loseLife = new Audio("loseLife.m4a");
 var playerWin = new Audio("playerWin.m4a");
 
+var wakaWaka2 = new Audio("wakaWaka2.m4a");
+var pacmanDies2 = new Audio("pacmanDies2.m4a");
+var startUp2 = new Audio("startUp2.m4a");
+var pacmanDies2 = new Audio("pacmanDies2.m4a");
+var jesus2 = new Audio("jesus2.m4a");
+var loseLife2 = new Audio("loseLife2.m4a");
+
 function setup() { // renders the maze
     renderer.backgroundColor = wallColor;
     buildMaze();
     player = new Player(startLocation.row, startLocation.column);
-    startUp.play(); // plays start up sound
+    // startUp.play(); // plays start up sound
     // player2 = new Player(startLocation.row + 1, startLocation.column);
 }
 
@@ -133,7 +140,11 @@ function onKeyDown(event) { // moving
             if (!player.alive)
                 player.resurrect(); // Jesus function
                 playerLives = 3;
-                jesus.play(); // plays jesus sound
+                if (mazeCounter == 1) {
+                  jesus.play(); // plays eating sound
+                }
+                else jesus2.play();
+                // jesus.play(); // plays jesus sound
             break;
         case 84: // Teleport to next level
         changeMaze(maze2, rows2, columns2);
@@ -155,9 +166,10 @@ function onKeyDown(event) { // moving
 
 function buildMaze() {
 
-    if (mazeCounter == 2) {
-      // collin's startup sound.play
-    }
+  if (mazeCounter == 1) {
+    startUp.play(); // plays eating sound
+  }
+  else startUp2.play();
 
     // Calculate the best-fit size of a wall block based on the canvas size
     // and number of columns or rows in the grid.
@@ -273,7 +285,10 @@ function checkCollisions() {
     if (dots[i] == '.') {
         player.score += 1;
         dots[i] = ' ';
-        wakaWaka.play(); // plays eating sound
+        if (mazeCounter == 1) {
+          wakaWaka.play(); // plays eating sound
+        }
+        else wakaWaka2.play();
 
         // update the score display, which is in HTML outside of our canvas.
         var scorediv = document.getElementById('score');
@@ -297,13 +312,22 @@ function checkCollisions() {
         }
         if (player.location.row == monster.location.row && player.location.column == monster.location.column) {
           playerLives -= 1;
-          loseLife.play(); // plays eating sound
+          if (mazeCounter == 1) {
+            loseLife.play(); // plays eating sound
+          }
+          else loseLife2.play();
+
+          // loseLife.play(); // plays eating sound
           monster.iHitThePlayer = true;
           console.log('player lives = ' + playerLives);
         }
         if (playerLives == 0) {
           player.die();
-          pacmanDies.play(); // plays dies sound
+          if (mazeCounter == 1) {
+            pacmanDies.play(); // plays eating sound
+          }
+          else pacmanDies2.play();
+          // pacmanDies.play(); // plays dies sound
         }
     }
 }
