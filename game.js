@@ -54,30 +54,30 @@ var maze2 ='                                  '
 //         -------------------
 
 //         -------------------
-var maze3 ='   #     '
-         + '    #  # '
-         + ' # ##  # '
-         + '         '
-         + ' # ##  # '
-         + '       # '
-         + ' # ##  # '
-         + ' # ##  # '
-         + ' # ##  # '
-         + ' #  #  # '
-         + '   ##  # '
-         + ' # #   # '
-         + ' # ## A# '
-         + ' # # ### '
-         + '   #   # '
-         + ' #       '
-         + '   ##  # '
-         + '   ##  # '
-         + ' # ##  # '
-         + '   ##### '
-         + '   #     '
-         + '    #  # '
-         + '   ##    ';
-
+// var maze3 ='   #     '
+//          + '    #  # '
+//          + ' # ##  # '
+//          + '         '
+//          + ' # ##  # '
+//          + '       # '
+//          + ' # ##  # '
+//          + ' # ##  # '
+//          + ' # ##  # '
+//          + ' #  #  # '
+//          + '   ##  # '
+//          + ' # #   # '
+//          + ' # ## A# '
+//          + ' # # ### '
+//          + '   #   # '
+//          + ' #       '
+//          + '   ##  # '
+//          + '   ##  # '
+//          + ' # ##  # '
+//          + '   ##### '
+//          + '   #     '
+//          + '    #  # '
+//          + '   ##    ';
+//
 
 //         -------------------
 
@@ -86,8 +86,8 @@ var columns = 17;
 var rows = 11;
 var columns2 = 34;
 var rows2 = 22;
-var columns3 = 9;
-var rows3 = 22;
+// var columns3 = 9;
+// var rows3 = 22;
 
 var pathColor = 0x95CFB7;
 var wallColor = 0xFF823A;
@@ -110,8 +110,8 @@ var player; // player
 var monsters = []; // number in the brackets is how many monsters we draw (i), but change it in the monster.js
 var maxScore; // the maximum dots you can eat
 var maxScore2 = 507;
-var maxScore3 = 700;
-var playerLives = 3;
+// var maxScore3 = 700;
+var playerLives = 6;
 shouldCheckCollisions = false;
 
 //SOUNDS
@@ -333,12 +333,11 @@ function checkCollisions() {
             player.win();
             scorediv.innerHTML = player.score + " - YOU WIN!";
 
-            if (mazeCounter == 1) {
-              changeMaze(maze2, rows2, columns2, maxScore2);
-            }
-              if (mazeCounter == 2) {
-                changeMaze(maze3, rows3, columns3, maxScore3);
-              }
+            changeMaze(maze2, rows2, columns2, maxScore2);
+            
+              // if (mazeCounter == 2) {
+                // changeMaze(maze3, rows3, columns3, maxScore3);
+              // }
 // rows and columns change
         }
     }
