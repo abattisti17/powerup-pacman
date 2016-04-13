@@ -170,7 +170,7 @@ function onKeyDown(event) { // moving
         case 76: // L for 'Live Again' -- cheat codes!!!
             if (!player.alive)
                 player.resurrect(); // Jesus function
-                playerLives = 3;
+                playerLives += 3;
                 if (mazeCounter == 1) {
                   jesus.play(); // plays eating sound
                 }
@@ -327,6 +327,10 @@ function checkCollisions() {
         // update the score display, which is in HTML outside of our canvas.
         var scorediv = document.getElementById('score');
         scorediv.innerHTML = player.score;
+        
+        // update the lives display, which is in HTML outside of our canvas.
+        var lifediv = document.getElementById('life');
+        lifediv.innerHTML = playerLives;
 
         // Did we win yet?
         //Win State!!

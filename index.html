@@ -4,8 +4,9 @@
     <title>Game!</title>
     <style>
         body {
+            font-size: 1em;
             background-color: #000;
-            color: #eee;
+            color: #F2F26F;
             text-align: center;
             font-family: sans-serif;
         }
@@ -15,12 +16,30 @@
             font-size: 2em;
             font-weight: bold;
             color: #F2F26F;
+            }
+    	#pointsLabel {
+            font-size: 1em;
+            font-weight: bold;
+            color: #F2F26F;
+        }
+        #life {
+            font-size: 2em;
+            font-weight: bold;
+            color: #F04155;
+		}
+		#livesLabel {
+            font-size: 1em;
+            font-weight: bold;
+            color: #F04155;
         }
     </style>
 </head>
 <body onload="fwSetup();">
     <div id="gamecontainer"></div>
+    <div id="pointsLabel"> POINTS </div>
     <div id="score">0</div>
+    <div id="livesLabel"> LIVES </div>
+    <div id="life">0</div>
 </body>
 <script src="pixi.min.js"></script>
 <script src="helper.js"></script>
