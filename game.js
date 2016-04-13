@@ -197,7 +197,7 @@ function onKeyDown(event) { // moving
 }
 
 function buildMaze() {
-
+// sounds
   if (mazeCounter == 1) {
     startUp.play(); // plays eating sound
   }
@@ -306,8 +306,9 @@ var changeMaze = function(newMaze, newRows, newColumns, newMaxScore) {
     rows = newRows;
     columns = newColumns;
     mazeCounter +=1;
-    maxScore = newMaxScore;
     buildMaze(); //rebuilds the maze
+    maxScore = newMaxScore;
+
   }
 
 // ============================================================================
@@ -333,8 +334,9 @@ function checkCollisions() {
             player.win();
             scorediv.innerHTML = player.score + " - YOU WIN!";
 
+            if (mazeCounter == 1) {
             changeMaze(maze2, rows2, columns2, maxScore2);
-            
+            }
               // if (mazeCounter == 2) {
                 // changeMaze(maze3, rows3, columns3, maxScore3);
               // }
